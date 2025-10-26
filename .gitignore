@@ -19,6 +19,6 @@ build/
 *.log
 
 # Optional: lockfiles (keep if you prefer reproducible installs)
-# package-lock.json
+package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
