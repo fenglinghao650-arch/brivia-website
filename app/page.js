@@ -14,6 +14,8 @@ const tourImages = {
   Wuzhen: "/wuzhen.jpg",
 };
 
+// utility: "Shanghai Cultural Discovery" -> "Shanghai"
+const firstWord = (title) => title.split(" ")[0];
 
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
@@ -41,6 +43,24 @@ export default function BriviaMock() {
   const t = (en, zh) => (lang === "en" ? en : zh);
 const sections = ["mission", "products", "tours", "plan", "join", "contact"];
 const [active, setActive] = useState("");
+// local tour image metadata (pixels)
+const tourMeta = {
+  Shanghai: { w: 800,  h: 500 },  // 16:10-ish (wide)
+  Hangzhou: { w: 4032, h: 3024 }, // 4:3 (landscape)
+  Wuzhen:   { w: 3024, h: 4032 }, // 3:4 (portrait)
+};
+
+// return a Tailwind aspect-ratio class that matches each photo
+const aspectClass = (name) => {
+  const m = tourMeta[name];
+  if (!m) return "aspect-[4/3]";
+  const r = m.w / m.h;
+  // pick a clean fraction close to the real ratio
+  if (Math.abs(r - 16 / 10) < 0.06) return "aspect-[16/10]";
+  if (Math.abs(r - 4 / 3)   < 0.06) return "aspect-[4/3]";
+  if (Math.abs(r - 3 / 4)   < 0.06) return "aspect-[3/4]";
+  return r > 1 ? "aspect-[4/3]" : "aspect-[3/4]";
+};
 
 useEffect(() => {
   const observers = [];
@@ -307,54 +327,74 @@ useEffect(() => {
           "Photo spots",
         ],
       },
-    ].map((tour) => (
-      <Card
-        key={tour.city}
-        className="rounded-3xl overflow-hidden border border-yellow-200/60 shadow-sm flex flex-col"
-      >
-        <div className="bg-[#f7f4ed]">
-          <Image
-            src={tourImages[tour.city.split(" ")[0]] || "/hero.jpg"}
-            alt={tour.city}
-            width={1600}
-            height={1200}
-            className="w-full h-auto object-cover rounded-t-3xl"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 33vw"
-          />
-        </div>
+    ].map((tour) => {
+      const key = firstWord(tour.city);               // "Shanghai" | "Hangzhou" | "Wuzhen"
+      const ratioClass = aspectClass(key);            // e.g. "aspect-[16/10]" | "aspect-[4/3]" | "aspect-[3/4]"
+      const meta = {
+        Shanghai: { w: 800,  h: 500 },
+        Hangzhou: { w: 4032, h: 3024 },
+        Wuzhen:   { w: 3024, h: 4032 },
+      }[key];
 
-        <CardHeader className="px-6 pt-4 pb-0">
-  <CardTitle className="text-[#123B7A]">{tour.city}</CardTitle>
-  <CardDescription className="text-slate-600 text-sm">{tour.subtitle}</CardDescription>
-</CardHeader>
+      return (
+        <Card
+          key={tour.city}
+          className="rounded-3xl overflow-hidden border border-yellow-200/60 shadow-sm flex flex-col"
+        >
+          {/* Image wrapper with true aspect ratio */}
+          <div
+            className={cn(
+              "relative w-full bg-[#f7f4ed] overflow-hidden",
+              ratioClass,                    // Tailwind aspect-* if available
+            )}
+            // Fallback if aspect-* not enabled:
+            style={{
+              aspectRatio: meta ? `${meta.w} / ${meta.h}` : undefined,
+            }}
+          >
+            <Image
+              src={tourImages[key] || "/hero.jpg"}
+              alt={tour.city}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 33vw"
+              priority={key === "Hangzhou"} // optional: prioritize one image
+            />
+          </div>
 
-<CardContent className="px-6 pb-6 pt-2 flex flex-col justify-between flex-1">
-  <ul className="text-sm text-slate-700 space-y-1">
-    {tour.features.map((f) => (
-      <li key={f} className="flex items-center gap-2">
-        <Sparkles className="h-4 w-4" /> {f}
-      </li>
-    ))}
-  </ul>
+          <CardHeader className="px-6 pt-4 pb-0">
+            <CardTitle className="text-[#123B7A]">{tour.city}</CardTitle>
+            <CardDescription className="text-slate-600 text-sm">{tour.subtitle}</CardDescription>
+          </CardHeader>
 
-  <div className="mt-4 flex gap-2">
-    <Button
-      asChild
-      variant="outline"
-      className="border-[#123B7A] text-[#123B7A]"
-    >
-      <a href="#contact">{t("Details", "查看详情")}</a>
-    </Button>
-    <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
-      <a href="#contact">{t("Request Quote", "咨询报价")}</a>
-    </Button>
-  </div>
-</CardContent>
+          <CardContent className="px-6 pb-6 pt-2 flex flex-col justify-between flex-1">
+            <ul className="text-sm text-slate-700 space-y-1">
+              {tour.features.map((f) => (
+                <li key={f} className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4" /> {f}
+                </li>
+              ))}
+            </ul>
 
-      </Card>
-    ))}
+            <div className="mt-4 flex gap-2">
+              <Button
+                asChild
+                variant="outline"
+                className="border-[#123B7A] text-[#123B7A]"
+              >
+                <a href="#contact">{t("Details", "查看详情")}</a>
+              </Button>
+              <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
+                <a href="#contact">{t("Request Quote", "咨询报价")}</a>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      );
+    })}
   </div>
 </Section>
+
 
 
       <Section id="plan" className="py-12">
