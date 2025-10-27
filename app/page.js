@@ -181,7 +181,7 @@ useEffect(() => {
                 <Sparkles className="h-5 w-5 text-yellow-600" />
                 <div className="text-sm">
                   <div className="font-semibold text-[#0B1C2C]">{t("Authentic Connections", "真实连接")}</div>
-                  <div className="text-slate-600">{t("Culture-first, tech-enabled.", "文化为本，技术赋能。")}</div>
+                  <div className="text-slate-600">{t("Experience-first, tech-enabled.", "技术服务体验。")}</div>
                 </div>
               </div>
             </div>
@@ -192,18 +192,16 @@ useEffect(() => {
       <Section id="mission" className="py-12">
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: <Bot className="h-5 w-5 text-[#123B7A]" />, title: t("AI Infrastructure","AI 基础设施"), desc: t("Systems that unlock access and personalization.","提供可及与个性化的系统能力") },
-            { icon: <Users className="h-5 w-5 text-[#123B7A]" />, title: t("Human-Centered","以人为本"), desc: t("Local experts at the heart of every experience.","本地达人是体验的核心") },
-            { icon: <Compass className="h-5 w-5 text-[#123B7A]" />, title: t("Authenticity","真实与连接"), desc: t("Meaningful bonds between people and places.","在人与地方之间建立有意义的连接") },
+            { icon: <Bot className="h-5 w-5 text-[#123B7A]" />, title: t("AI-enabled","AI赋能"), desc: t("Systems that enable personalizations.","系统赋能个性化的服务与体验") },
+            { icon: <Users className="h-5 w-5 text-[#123B7A]" />, title: t("Human-Centered","以人为本"), desc: t("Human connctions that bridge you and the destination.","向导是连结你与目的地的桥梁") },
+            { icon: <Compass className="h-5 w-5 text-[#123B7A]" />, title: t("Authenticity","地道体验"), desc: t("Travel and explore like a local.","像当地人一样探索和旅行") },
           ].map((c)=> (
-            <Card key={c.title} className="rounded-2xl shadow-sm">
-              <CardHeader>
+            <Card key={c.title} className="rounded-2xl shadow-sm min-h-[110px]">
+              <CardHeader className="p-6">
                 <CardTitle className="flex items-center gap-2">{c.icon}{c.title}</CardTitle>
                 <CardDescription>{c.desc}</CardDescription>
               </CardHeader>
-              <CardContent className="text-sm text-slate-700">
-                {t("We design AI-powered infrastructure to reduce friction in cross-cultural travel.","以 AI 能力降低跨文化旅行中的信息不对称与摩擦。")}
-              </CardContent>
+
             </Card>
           ))}
         </div>
@@ -212,183 +210,336 @@ useEffect(() => {
       <Section id="products" className="py-6">
         <h2 className="text-3xl font-bold text-[#0B1C2C] mb-6">{t("Our Products", "我们的产品")}</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="rounded-3xl border-yellow-200/60">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>{t("Brivience", "Brivience 平台")}</CardTitle>
-                <Pill>{t("MVP Development", "MVP 开发中")}</Pill>
-              </div>
-              <CardDescription>
-                {t("AI-powered mobile platform connecting inbound tourists with Chinese local experts offering authentic, embodied experiences—think Airbnb Experiences, but more.","AI 赋能的移动平台，连接入境游客与中国本地达人，提供真实而具身的在地体验——不止于 Airbnb Experiences。")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-3">
-                <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
-  <a href="#products">{t("Learn More", "了解更多")}</a>
-</Button>
-<Button asChild variant="outline" className="border-[#123B7A] text-[#123B7A]">
-  <a href="#join">{t("Apply as Beta Expert", "申请内测达人")}</a>
-</Button>
+          {/* === Brivience Card === */}
+<Card className="rounded-3xl border-yellow-200/60">
+  <CardHeader className="space-y-4">
+    <div className="flex items-center justify-between">
+      <CardTitle>{t("Brivience", "Brivience 平台")}</CardTitle>
+      <Pill>{t("MVP Development", "MVP 开发中")}</Pill>
+    </div>
+    <CardDescription>
+      {t(
+        "AI-powered mobile platform connecting inbound tourists with Chinese local experts offering authentic, embodied experiences—think Airbnb Experiences, but more.",
+        "AI 赋能的移动平台，连接入境游客与中国本地达人，提供真实而具身的在地体验——不止于 Airbnb Experiences。"
+      )}
+    </CardDescription>
+  </CardHeader>
 
-              </div>
-              <ul className="mt-4 list-disc pl-5 text-sm text-slate-700 space-y-1">
-                <li>{t("Seeking founding tech talents.", "寻找联合创始技术人才")}</li>
-                <li>{t("Recruiting co-founding beta local experts.", "招募内测期共创本地达人")}</li>
-                <li>{t("Ideal: bilingual, cross-cultural, deep local insights, social presence.", "优选：双语/跨文化/深度在地洞察/社媒影响力")}</li>
-              </ul>
-            </CardContent>
-          </Card>
+  <CardContent>
+    <div className="flex flex-wrap gap-3">
+      <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
+        <a href="#products">{t("Learn More", "了解更多")}</a>
+      </Button>
+      <Button asChild variant="outline" className="border-[#123B7A] text-[#123B7A]">
+        <a href="#join">{t("Apply as Beta Expert", "申请内测达人")}</a>
+      </Button>
+    </div>
+    <ul className="mt-4 list-disc pl-5 text-sm text-slate-700 space-y-1">
+      <li>{t("Seeking founding tech talents.", "寻找联合创始技术人才。")}</li>
+      <li>{t("Recruiting co-founding beta local experts.", "招募内测期共创本地达人。")}</li>
+    </ul>
+  </CardContent>
+</Card>
 
-          <Card className="rounded-3xl">
-            <CardHeader>
-              <CardTitle>{t("Hangzhou / Shanghai Premium Tours", "杭州/上海高端定制")}</CardTitle>
-              <CardDescription>
-                {t("All-in-one private tours with local insight: accommodation, dining, transportation, guidance & translation—perfect for first-time travelers.","集合住宿/餐饮/交通/向导与翻译的私享行程，兼具地道与舒适——新手入华的理想之选。")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-3">
-                <Button asChild className="bg-[#D4AF37] hover:bg-yellow-500 text-[#0B1C2C]">
-  <a href="#tours">{t("See Tour Packages", "查看精选行程")}</a>
-</Button>
+{/* === Premium Local Tours Card === */}
+<Card className="rounded-3xl border-yellow-200/60">
+  <CardHeader className="space-y-4">
+    <div className="flex items-center justify-between">
+      <CardTitle>{t("Premium Local Tours", "高端定制旅行")}</CardTitle>
+      <Pill>{t("Launching Soon", "即将上线")}</Pill>
+    </div>
+    <CardDescription>
+      {t(
+        "We blend the ease of all-in-one travel services with the richness of authentic local experiences—from the echoes of ancient dynasties to the fragrance of Dragon-Well tea drifting through bamboo forests—perfect for first-time travelers.",
+        "结合一站式旅行服务与地道文化体验，从古代王朝的心跳到龙井茶香，尽享初访中国的完美旅程。"
+      )}
+    </CardDescription>
+  </CardHeader>
 
-              </div>
-            </CardContent>
-          </Card>
+  <CardContent>
+    <div className="flex flex-wrap gap-3">
+      <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
+        <a href="#tours">{t("See Tour Packages", "查看精选行程")}</a>
+      </Button>
+      <Button asChild variant="outline" className="border-[#123B7A] text-[#123B7A]">
+        <a href="#contact">{t("Contact for Partnership", "合作洽谈")}</a>
+      </Button>
+    </div>
+    <ul className="mt-4 list-disc pl-5 text-sm text-slate-700 space-y-1">
+      <li>{t("Looking to expand partnerships with qualified travel agencies (TA).", "正在拓展与优质旅行社的合作。")}</li>
+    </ul>
+  </CardContent>
+</Card>
+
         </div>
       </Section>
 
       <Section id="tours" className="py-10">
-        <div className="flex items-center gap-3 mb-6">
-          <Route className="h-5 w-5 text-[#123B7A]" />
-          <h2 className="text-3xl font-bold text-[#0B1C2C]">{t("Featured Tours", "精选行程")}</h2>
+  <div className="flex items-center gap-3 mb-6">
+    <Route className="h-5 w-5 text-[#123B7A]" />
+    <h2 className="text-3xl font-bold text-[#0B1C2C]">
+      {t("Featured Tours", "精选行程")}
+    </h2>
+  </div>
+
+  <div className="grid md:grid-cols-3 gap-8">
+    {[
+      {
+        city: "Shanghai Cultural Discovery",
+        subtitle: "Bund • Former French Concession • Alleyway Life",
+        features: ["Custom pace", "Boutique restaurants", "Hidden gems walk"],
+      },
+      {
+        city: "Hangzhou Premium Day Tour",
+        subtitle: "West Lake • Tea Villages • Song Dynasty Heritage",
+        features: [
+          "Private guide & translation",
+          "Premium transport",
+          "Local dining",
+        ],
+      },
+      {
+        city: "Wuzhen Water Town Escape",
+        subtitle: "Canals • Wooden Bridges • Night Lights",
+        features: [
+          "Traditional theater add-on",
+          "Tea ceremony",
+          "Photo spots",
+        ],
+      },
+    ].map((tour) => (
+      <Card
+        key={tour.city}
+        className="rounded-3xl overflow-hidden border border-yellow-200/60 shadow-sm flex flex-col"
+      >
+        <div className="bg-[#f7f4ed]">
+          <Image
+            src={tourImages[tour.city.split(" ")[0]] || "/hero.jpg"}
+            alt={tour.city}
+            width={1600}
+            height={1200}
+            className="w-full h-auto object-cover rounded-t-3xl"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 33vw"
+          />
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {tours.map((tItem) => (
-            <Card key={tItem.city} className="rounded-3xl overflow-hidden">
-              <div className="bg-[#f7f4ed]">
-  <Image
-    src={tourImages[tItem.city.split(" ")[0]] || "/hero.jpg"} // use your local images
-    alt={tItem.city}
-    width={1600}
-    height={1200}
-    className="w-full h-auto object-contain rounded-t-3xl"
-    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 33vw"
-  />
+
+        <CardHeader className="px-6 pt-4 pb-0">
+  <CardTitle className="text-[#123B7A]">{tour.city}</CardTitle>
+  <CardDescription className="text-slate-600 text-sm">{tour.subtitle}</CardDescription>
+</CardHeader>
+
+<CardContent className="px-6 pb-6 pt-2 flex flex-col justify-between flex-1">
+  <ul className="text-sm text-slate-700 space-y-1">
+    {tour.features.map((f) => (
+      <li key={f} className="flex items-center gap-2">
+        <Sparkles className="h-4 w-4" /> {f}
+      </li>
+    ))}
+  </ul>
+
+  <div className="mt-4 flex gap-2">
+    <Button
+      asChild
+      variant="outline"
+      className="border-[#123B7A] text-[#123B7A]"
+    >
+      <a href="#contact">{t("Details", "查看详情")}</a>
+    </Button>
+    <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
+      <a href="#contact">{t("Request Quote", "咨询报价")}</a>
+    </Button>
+  </div>
+</CardContent>
+
+      </Card>
+    ))}
+  </div>
+</Section>
+
+
+      <Section id="plan" className="py-12">
+  {/* Heading + intro */}
+   <div className="max-w-6xl mx-auto text-center">
+  <h2 className="text-3xl font-bold text-[#0B1C2C] mb-4 text-left lg:text-left">
+    {t("Our Plan", "发展规划")}
+  </h2>
+  <p className="text-slate-700 text-center whitespace-nowrap mx-auto">
+    {t(
+      "We’re early in branding and team-building. We aim to establish prominence in China inbound tourism, then expand globally.",
+      "目前处于品牌与团队搭建的早期阶段。首先在中国入境游赛道建立影响力，随后全球化拓展。"
+    )}
+  </p>
 </div>
 
 
-              <CardHeader>
-                <CardTitle className="text-[#123B7A]">{tItem.city}</CardTitle>
-                <CardDescription>{tItem.subtitle}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="text-sm text-slate-700 space-y-1">
-                  {tItem.features.map((f) => (<li key={f} className="flex items-center gap-2"><Sparkles className="h-4 w-4" /> {f}</li>))}
-                </ul>
-                <div className="mt-4 flex gap-2">
-                 <Button asChild variant="outline" className="border-[#123B7A] text-[#123B7A]">
-  <a href="#contact">{t("Details", "查看详情")}</a>
-</Button>
-<Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
-  <a href="#contact">{t("Request Quote", "咨询报价")}</a>
-</Button>
+  {/* Horizontal roadmap */}
+  <div className="mt-10 max-w-6xl mx-auto px-2">
+    <div className="relative bg-white rounded-3xl p-6 shadow-sm border border-yellow-200/50">
+      {/* connecting line (desktop) */}
+      <div className="hidden md:block absolute left-8 right-8 top-1/2 -translate-y-1/2 h-[2px] bg-yellow-200/70" />
 
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-8">
+        {[
+          t("Build MVP & onboard beta local experts", "完成 MVP 并上线内测达人"),
+          t("Launch Brivience beta in Hangzhou & Shanghai", "在杭/沪发布 Brivience 内测版"),
+          t("Expand Brivience experts nationwide", "拓展 Brivience 达人至更多城市"),
+          t("Empower experts with digital products (interactive maps, guides)", "赋能达人打造可变现的数字产品（智能交互地图、指南等）"),
+          t("Scale globally", "全球扩张"),
+        ].map((s, i) => (
+          <div
+            key={i}
+            className="relative flex md:flex-col items-start md:items-center gap-3 md:gap-4"
+          >
+            {/* number badge */}
+            <div className="z-10 shrink-0 h-9 w-9 rounded-full bg-[#D4AF37] text-[#0B1C2C] flex items-center justify-center font-bold md:mx-auto">
+              {i + 1}
+            </div>
 
-      <Section id="plan" className="py-12">
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          <div>
-            <h2 className="text-3xl font-bold text-[#0B1C2C] mb-4">{t("Our Plan", "发展规划")}</h2>
-            <p className="text-slate-700">{t("We’re early in branding and team-building. We aim to establish prominence in China inbound tourism, then expand globally.","目前处于品牌与团队搭建的早期阶段。首先在中国入境游赛道建立影响力，随后全球化拓展。")}</p>
-            <ul className="mt-4 space-y-3 text-slate-800">
-              {[
-                t("Build MVP & onboard beta local experts","完成 MVP 并上线内测达人"),
-                t("Launch Brivience beta in Hangzhou & Shanghai","在杭/沪发布 Brivience 内测版"),
-                t("Expand premium tours nationwide","拓展高端定制至更多城市"),
-                t("Empower experts with digital products (interactive maps, guides)","赋能达人打造可变现的数字产品（交互地图、指南等）"),
-                t("Scale globally","全球化扩张"),
-              ].map((s,i)=> (<li key={i} className="flex gap-3"><span className="text-[#D4AF37]">•</span>{s}</li>))}
-            </ul>
-          </div>
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-yellow-200/50">
-            <div className="space-y-6">
-              {[1,2,3,4,5].map((step) => (
-                <div key={step} className="flex items-start gap-4">
-                  <div className="mt-1 h-8 w-8 rounded-full bg-[#D4AF37] text-[#0B1C2C] flex items-center justify-center font-bold">{step}</div>
-                  <div className="flex-1 border-l pl-4">
-                    <div className="font-semibold text-[#123B7A]">{t("Milestone", "里程碑")} {step}</div>
-                    <div className="text-sm text-slate-700">{t("Placeholder description for timeline milestone.", "时间轴占位描述。")}</div>
-                  </div>
-                </div>
-              ))}
+            {/* text */}
+            <div className="md:text-center">
+              <div className="font-semibold text-[#123B7A]">
+                {t("Milestone", "里程碑")} {i + 1}
+              </div>
+              <div className="text-sm text-slate-700">{s}</div>
             </div>
           </div>
-        </div>
-      </Section>
+        ))}
+      </div>
+    </div>
+  </div>
+</Section>
+
+
 
       <Section id="join" className="py-12">
-        <h2 className="text-3xl font-bold text-[#0B1C2C] mb-6">{t("Join Us", "加入我们")}</h2>
-        <div className="grid md:grid-cols-4 gap-6">
-          <Card className="rounded-3xl">
-            <CardHeader>
-              <CardTitle>{t("Linghao Feng", "冯泠皓")}</CardTitle>
-              <CardDescription>{t("CEO, Founder", "首席执行官/创始人")}</CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-slate-700">
-              {t("Actor, psychologist-in-training, and entrepreneur building authentic, AI-enabled cultural travel.","演员、心理学训练者与创业者，致力于以 AI 赋能真实的文化旅行。")}
-            </CardContent>
-          </Card>
+  <h2 className="text-3xl font-bold text-[#0B1C2C] mb-6">
+    {t("Join Us", "加入我们")}
+  </h2>
 
-          {[{role:"CTO",desc:t("AI/Software Engineering Lead","AI/软件工程负责人")},{role:"CFO",desc:t("Finance & Ops","财务与运营")},{role:t("Social Media Manager","社媒经理"),desc:t("Content, partnerships, growth","内容/合作/增长")}].map((r)=> (
-            <Card key={r.role} className="rounded-3xl">
-              <CardHeader>
-                <CardTitle>{r.role}</CardTitle>
-                <CardDescription>{r.desc}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C] w-full">
-  <a href="#join">{t("Apply", "申请")}</a>
-</Button>
+  {/* Row 1: CEO alone, centered */}
+  <div className="flex justify-center mb-8">
+    {/* Row 1: CEO card with image */}
+<div className="flex justify-center mb-10">
+  <Card className="rounded-3xl shadow-lg border border-yellow-100 md:flex md:flex-row md:w-[800px] overflow-hidden">
+    {/* Image section */}
+    <div className="md:w-1/2 w-full">
+      <img
+        src="/ceo.jpeg"
+        alt="Linghao Feng"
+        className="w-full h-full object-cover"
+      />
+    </div>
 
-              </CardContent>
-            </Card>
-          ))}
+    {/* Text section */}
+    <div className="p-6 flex flex-col justify-center md:w-1/2">
+      <CardHeader className="p-0">
+        <CardTitle className="text-2xl font-semibold text-[#0B1C2C]">
+          Linghao Feng
+        </CardTitle>
+        <CardDescription className="text-slate-600 mb-3">
+          CEO, Founder
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-0 text-slate-700 text-sm leading-relaxed">
+        Actor, psychologist-in-training, and entrepreneur building authentic,
+        AI-enabled cultural travel.
+      </CardContent>
+    </div>
+  </Card>
+</div>
 
-          <Card className="rounded-3xl md:col-span-2">
-            <CardHeader>
-              <CardTitle>{t("Beta Local Experts", "内测本地达人")}</CardTitle>
-              <CardDescription>{t("Sign up to co-create the platform and join the first launch.", "报名共创平台并参与首发。")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="aspect-video w-full rounded-2xl overflow-hidden border">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc-placeholder/viewform?embedded=true" title="Beta Local Expert Intake" className="w-full h-full">Loading…</iframe>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </Section>
+  </div>
+
+  {/* Row 2: four equal cards */}
+  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    {/* CTO */}
+    <Card className="rounded-3xl">
+      <CardHeader>
+        <CardTitle>CTO</CardTitle>
+        <CardDescription>{t("Leads AI infrastructure, product engineering, and technical architecture.","AI/软件工程负责人")}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button asChild className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]">
+          <a href="#join">{t("Apply", "申请")}</a>
+        </Button>
+      </CardContent>
+    </Card>
+
+    {/* CFO */}
+    <Card className="rounded-3xl">
+      <CardHeader>
+        <CardTitle>CFO</CardTitle>
+        <CardDescription>{t("Oversees finance, business operations, and strategic growth planning.","财务与运营")}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button asChild className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]">
+          <a href="#join">{t("Apply", "申请")}</a>
+        </Button>
+      </CardContent>
+    </Card>
+
+    {/* Social Media Manager */}
+    <Card className="rounded-3xl">
+      <CardHeader>
+        <CardTitle>{t("Social Media Manager","社媒经理")}</CardTitle>
+        <CardDescription>{t("Manages content strategy, partnerships, and brand storytelling.","内容/合作/增长")}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button asChild className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]">
+          <a href="#join">{t("Apply", "申请")}</a>
+        </Button>
+      </CardContent>
+    </Card>
+
+    {/* Beta Local Experts (same look; button links to signup) */}
+    <Card className="rounded-3xl">
+      <CardHeader>
+        <CardTitle>{t("Beta Local Experts", "内测本地达人")}</CardTitle>
+        <CardDescription>
+          {t("Sign up to create the platform together with us and join the first launch.","报名共创平台并参与首发。")}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button
+          asChild
+          className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]"
+        >
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSc-placeholder/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t("Apply", "申请")}
+          </a>
+        </Button>
+      </CardContent>
+    </Card>
+  </div>
+</Section>
 
       <Section id="contact" className="py-12">
         <div className="grid lg:grid-cols-2 gap-8 items-start">
           <div>
             <h2 className="text-3xl font-bold text-[#0B1C2C] mb-4">{t("Contact", "联系")}</h2>
-            <div className="space-y-3 text-slate-800">
-              <div className="flex items-center gap-3"><Mail className="h-5 w-5 text-[#123B7A]" /><a href="mailto:fenglinghao650@gmail.com" className="hover:underline">fenglinghao650@gmail.com</a></div>
-              <div className="flex items-center gap-3"><Phone className="h-5 w-5 text-[#123B7A]" /><a href="tel:+14379718950" className="hover:underline">+1 (437) 971-8950</a></div>
-              <div className="flex items-center gap-3"><MessageCircle className="h-5 w-5 text-[#123B7A]" /><span>WeChat: 15957196268</span></div>
-            </div>
-            <div className="mt-6">
-              <Pill>{t("Capacity & Public Domain", "容量与公开性")}</Pill>
-              <p className="mt-2 text-sm text-slate-700">
-                {t("Low-cost, scalable static hosting (Vercel/Netlify/GitHub Pages). Clean, professional, and aligned with Brivia’s values.","采用低成本的静态托管（Vercel/Netlify/GitHub Pages），设计专业清爽并符合品牌价值。")}
-              </p>
+            <div className="space-y-5 text-slate-800 mt-6">
+              <div className="flex items-center gap-4 text-lg md:text-xl font-medium">
+    <Mail className="h-6 w-6 text-[#123B7A]" />
+    <a href="mailto:fenglinghao650@gmail.com" className="hover:text-[#D4AF37] transition-colors">
+      fenglinghao650@gmail.com
+    </a>
+  </div>
+              <div className="flex items-center gap-4 text-lg md:text-xl font-medium">
+    <Phone className="h-6 w-6 text-[#123B7A]" />
+    <a href="tel:+14379718950" className="hover:text-[#D4AF37] transition-colors">
+      +1 (437) 971-8950
+    </a>
+  </div>
+              <div className="flex items-center gap-4 text-lg md:text-xl font-medium">
+    <MessageCircle className="h-6 w-6 text-[#123B7A]" />
+    <span className="hover:text-[#D4AF37] transition-colors">
+      WeChat: 15957196268
+    </span>
+  </div>
             </div>
           </div>
           <Card className="rounded-3xl">
