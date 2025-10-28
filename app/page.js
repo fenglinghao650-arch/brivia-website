@@ -1,5 +1,5 @@
 "use client";
-// === Brivia Mockup Page (uses shadcn-like UI components) ===
+// === Brivience Mockup Page (uses shadcn-like UI components) ===
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Compass, Users, Mail, Phone, MessageCircle, ChevronRight, Globe2, Building2, Sparkles, Calendar, Route, Languages, Bot } from "lucide-react";
@@ -17,6 +17,7 @@ const tourImages = {
 // utility: "Shanghai Cultural Discovery" -> "Shanghai"
 const firstWord = (title) => title.split(" ")[0];
 
+const BETA_FORM = "https://tally.so/r/31ZM1l";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -38,9 +39,53 @@ const tours = [
   { city: "Wuzhen Water Town Escape", subtitle: "Canals • Wooden Bridges • Night Lights", features: ["Traditional theater add-on", "Tea ceremony", "Photo spots"] },
 ];
 
-export default function BriviaMock() {
+export default function BrivienceMock() {
   const [lang, setLang] = useState("en");
   const t = (en, zh) => (lang === "en" ? en : zh);
+  const [sending, setSending] = useState(false);
+const [sent, setSent] = useState(false);
+const [errMsg, setErrMsg] = useState("");
+
+async function handleContactSubmit(e) {
+  e.preventDefault();
+  setSending(true);
+  setSent(false);
+  setErrMsg("");
+
+  const form = e.currentTarget;
+const fd = new FormData(form);
+const payload = Object.fromEntries(fd.entries());
+
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    // Parse JSON only if the server actually sent JSON
+    const ct = res.headers.get("content-type") || "";
+    let data = null;
+    if (ct.includes("application/json")) {
+      data = await res.json();
+    }
+
+    if (!res.ok || !data?.ok) {
+      throw new Error(data?.error || `HTTP ${res.status}`);
+    }
+
+    setSent(true);
+    form.reset();
+  } catch (err) {
+    console.error("Contact form error:", err);
+    setErrMsg(err.message || "Something went wrong");
+  } finally {
+    setSending(false);
+  }
+}
+
+
 const sections = ["mission", "products", "tours", "plan", "join", "contact"];
 const [active, setActive] = useState("");
 // local tour image metadata (pixels)
@@ -93,7 +138,7 @@ useEffect(() => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-xl bg-[#D4AF37]" />
-            <span className="tracking-wide font-semibold">BRIVIA</span>
+            <span className="tracking-wide font-semibold">BRIVIENCE</span>
           </div>
           <div className="flex items-center gap-6 text-sm">
             <a
@@ -160,7 +205,14 @@ useEffect(() => {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
   <Button asChild className="bg-[#D4AF37] hover:bg-yellow-500 text-[#0B1C2C]">
-    <a href="#join">{t("Apply as Local Expert", "申请成为本地达人")}</a>
+    <a
+  href={`${BETA_FORM}?utm_source=site&utm_medium=hero&utm_campaign=beta_experts`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  {t("Apply as Local Expert", "申请成为本地达人")}
+</a>
+
   </Button>
 
   <Button asChild variant="outline" className="border-[#0B1C2C] text-[#0B1C2C] hover:bg-[#0B1C2C] hover:text-white">
@@ -185,7 +237,7 @@ useEffect(() => {
 >
   <Image
     src="/hero.jpg"  // ← your local hero photo
-    alt="Brivia hero — authentic connections in China"
+    alt="Brivience hero — authentic connections in China"
     width={2000}
     height={1200}
     className="w-full h-auto object-contain"
@@ -230,11 +282,11 @@ useEffect(() => {
       <Section id="products" className="py-6">
         <h2 className="text-3xl font-bold text-[#0B1C2C] mb-6">{t("Our Products", "我们的产品")}</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {/* === Brivience Card === */}
+          {/* === Brivia Card === */}
 <Card className="rounded-3xl border-yellow-200/60">
   <CardHeader className="space-y-4">
     <div className="flex items-center justify-between">
-      <CardTitle>{t("Brivience", "Brivience 平台")}</CardTitle>
+      <CardTitle>{t("Brivia", "Brivia 平台")}</CardTitle>
       <Pill>{t("MVP Development", "MVP 开发中")}</Pill>
     </div>
     <CardDescription>
@@ -251,8 +303,15 @@ useEffect(() => {
         <a href="#products">{t("Learn More", "了解更多")}</a>
       </Button>
       <Button asChild variant="outline" className="border-[#123B7A] text-[#123B7A]">
-        <a href="#join">{t("Apply as Beta Expert", "申请内测达人")}</a>
-      </Button>
+  <a
+    href={`${BETA_FORM}?utm_source=site&utm_medium=products&utm_campaign=beta_experts`}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {t("Apply as Beta Expert", "申请内测达人")}
+  </a>
+</Button>
+
     </div>
     <ul className="mt-4 list-disc pl-5 text-sm text-slate-700 space-y-1">
       <li>{t("Seeking founding tech talents.", "寻找联合创始技术人才。")}</li>
@@ -385,7 +444,7 @@ useEffect(() => {
                 <a href="#contact">{t("Details", "查看详情")}</a>
               </Button>
               <Button asChild className="bg-[#123B7A] hover:bg-[#0B1C2C]">
-                <a href="#contact">{t("Request Quote", "咨询报价")}</a>
+                <a href="#contact">{t("Request Tour", "咨询行程")}</a>
               </Button>
             </div>
           </CardContent>
@@ -421,8 +480,8 @@ useEffect(() => {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-8">
         {[
           t("Build MVP & onboard beta local experts", "完成 MVP 并上线内测达人"),
-          t("Launch Brivience beta in Hangzhou & Shanghai", "在杭/沪发布 Brivience 内测版"),
-          t("Expand Brivience experts nationwide", "拓展 Brivience 达人至更多城市"),
+          t("Launch Brivia beta in Hangzhou & Shanghai", "在杭/沪发布 Brivia 内测版"),
+          t("Expand Brivience experts nationwide", "拓展 Brivia 达人至更多城市"),
           t("Empower experts with digital products (interactive maps, guides)", "赋能达人打造可变现的数字产品（智能交互地图、指南等）"),
           t("Scale globally", "全球扩张"),
         ].map((s, i) => (
@@ -500,7 +559,7 @@ useEffect(() => {
       </CardHeader>
       <CardContent>
         <Button asChild className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]">
-          <a href="#join">{t("Apply", "申请")}</a>
+          <a href="#contact">{t("Apply", "申请")}</a>
         </Button>
       </CardContent>
     </Card>
@@ -513,7 +572,7 @@ useEffect(() => {
       </CardHeader>
       <CardContent>
         <Button asChild className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]">
-          <a href="#join">{t("Apply", "申请")}</a>
+          <a href="#contact">{t("Apply", "申请")}</a>
         </Button>
       </CardContent>
     </Card>
@@ -526,7 +585,7 @@ useEffect(() => {
       </CardHeader>
       <CardContent>
         <Button asChild className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]">
-          <a href="#join">{t("Apply", "申请")}</a>
+          <a href="#contact">{t("Apply", "申请")}</a>
         </Button>
       </CardContent>
     </Card>
@@ -545,12 +604,13 @@ useEffect(() => {
           className="w-full bg-[#123B7A] hover:bg-[#0B1C2C]"
         >
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSc-placeholder/viewform"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t("Apply", "申请")}
-          </a>
+  href={`${BETA_FORM}?utm_source=site&utm_medium=cta&utm_campaign=beta_experts`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  {t("Apply", "申请")}
+</a>
+
         </Button>
       </CardContent>
     </Card>
@@ -585,17 +645,53 @@ useEffect(() => {
           <Card className="rounded-3xl">
             <CardHeader>
               <CardTitle>{t("Send a Message", "在线留言")}</CardTitle>
-              <CardDescription>{t("We’ll get back within 1–2 business days.", "我们将在 1–2 个工作日内回复。")}</CardDescription>
+              <CardDescription>{t("We’ll get back within 7 business days.", "我们将在 7 个工作日内回复。")}</CardDescription>
             </CardHeader>
             <CardContent>
-              <form method="POST" action="#">
-                <div className="grid gap-3">
-                  <Input name="name" placeholder={t("Your name", "姓名")} required />
-                  <Input name="email" type="email" placeholder="Email" required />
-                  <Textarea name="message" placeholder={t("How can we help?", "请描述您的需求")} rows={5} />
-                  <Button className="bg-[#D4AF37] hover:bg-yellow-500 text-[#0B1C2C]">{t("Send", "发送")}</Button>
-                </div>
-              </form>
+              <form onSubmit={handleContactSubmit} noValidate>
+  <div className="grid gap-3">
+    {/* Honeypot (spam trap, hidden) */}
+    <input name="hp" tabIndex="-1" autoComplete="off" className="hidden" />
+
+    <Input
+      name="name"
+      placeholder={t("Your name / Organization", "姓名 / 机构名")}
+      required
+    />
+    <Input
+      name="email"
+      type="email"
+      placeholder={t("Your email", "邮箱")}
+      required
+    />
+    <Textarea
+      name="message"
+      placeholder={t("Tell us how you'd like to collaborate or apply.", "请描述您的合作意向或申请理由。")}
+      rows={5}
+      required
+    />
+
+    <Button
+      type="submit"
+      disabled={sending}
+      className="bg-[#D4AF37] hover:bg-yellow-500 text-[#0B1C2C]"
+    >
+      {sending ? t("Sending…", "发送中…") : t("Send", "发送")}
+    </Button>
+
+    {sent && (
+      <p className="text-green-700 text-sm">
+        {t("Thanks! We received your message and will reply soon.", "已收到您的留言，我们会尽快回复。")}
+      </p>
+    )}
+    {errMsg && (
+      <p className="text-red-600 text-sm">
+        {t("Failed to send:", "发送失败：")} {errMsg}
+      </p>
+    )}
+  </div>
+</form>
+
             </CardContent>
           </Card>
         </div>
